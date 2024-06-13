@@ -6,10 +6,17 @@ import sys
 # ffprobe = FFProbe("https://eccms.vinhintw.com/chapter-1%2Fchapter-1.mp4")
 # print(ffprobe.all())
 
+
 def monitor(ffmpeg, duration, time_, time_left, process):
     per = round(time_ / duration * 100)
-    sys.stdout.write("\rTranscoding...(%s%%) %s left [%s%s]"% (per,datetime.timedelta(seconds=int(time_left)),"#" * per,"-" * (100 - per),
-    )
+    sys.stdout.write(
+        "\rTranscoding...(%s%%) %s left [%s%s]"
+        % (
+            per,
+            datetime.timedelta(seconds=int(time_left)),
+            "#" * per,
+            "-" * (100 - per),
+        )
     )
     sys.stdout.flush()
 
@@ -26,5 +33,5 @@ _1080p = Representation(Size(1920, 1080), Bitrate(4096 * 1024, 320 * 1024))
 _1440p = Representation(Size(2560, 1440), Bitrate(8192 * 1024, 320 * 1024))
 hls = video.hls(Formats.h264())
 hls.encryption(save_to, url)
-hls.auto_generate_representations([1080, 720, 480])
-hls.output("./videos/hls.m3u8", monitor=monitor)
+hls.auto_generate_representations([480])
+hls.output("./video/hls.m3u8", monitor=monitor)
